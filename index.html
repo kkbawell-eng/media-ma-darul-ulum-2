@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MEDIA DARUL ULUM</title>
+<meta name="description" content="Website resmi MEDIA DARUL ULUM: beranda, tentang, sejarah, visi dan misi, kegiatan, dokumentasi, dan sosial media.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --gelap:#0a0a0a; --gelap2:#141414; --zamrud:#0f5a46; --emas:#2fd49a; --gading:#ffffff; --tinta:#0a0a0a; --abu:#efefec;
+  --display:"Bebas Neue","Oswald","Arial Narrow",Impact,sans-serif;
+  --sans:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth;scroll-padding-top:64px}
+body{font-family:var(--sans);background:#fff;color:var(--tinta);line-height:1.65;-webkit-font-smoothing:antialiased}
+body:has(nav#menu.buka){overflow:hidden}
+img{display:block;max-width:100%}
+[hidden]{display:none!important}
+:focus-visible{outline:3px solid var(--emas);outline-offset:3px}
+.wrap{max-width:1240px;margin:auto;padding:0 5vw}
+
+/* Header: MENU kiri, logo tengah, kontrol pengembang kanan */
+header{position:fixed;inset:0 0 auto 0;z-index:70;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;
+  padding:16px 5vw;color:#fff;transition:background .3s,padding .3s}
+header.padat{background:var(--gelap);padding:10px 5vw}
+.burger{display:flex;align-items:center;gap:12px;background:none;border:0;color:inherit;cursor:pointer;font:inherit;padding:6px 0;justify-self:start}
+.gars{display:grid;gap:7px;width:30px}
+.gars i{display:block;height:2px;background:currentColor}
+.burger b{font-family:var(--display);font-weight:400;font-size:1.35rem;letter-spacing:.1em}
+.t-tutup{display:none}
+.burger[aria-expanded="true"] .t-buka{display:none}
+.burger[aria-expanded="true"] .t-tutup{display:inline}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit;font-family:var(--display);font-size:1.5rem;letter-spacing:.08em}
+.logo-box{width:44px;height:44px;position:relative;border-radius:50%;overflow:hidden;background:#fff;flex:none}
+.logo-box img{width:100%;height:100%;object-fit:cover}
+.kanan{display:flex;gap:10px;align-items:center;justify-content:flex-end;justify-self:end}
+.pill{border:1px solid currentColor;background:transparent;color:inherit;padding:7px 15px;border-radius:999px;cursor:pointer;font:inherit;font-size:.8rem;font-weight:600;letter-spacing:.03em}
+.pill:hover{background:#fff;color:var(--tinta)}
+body.edit #toggleEdit{background:var(--emas);color:var(--tinta);border-color:var(--emas)}
+.badge{background:var(--emas);color:var(--tinta);border-radius:999px;padding:3px 11px;font-size:.75rem;font-weight:800}
+
+/* Menu layar penuh */
+nav#menu{position:fixed;inset:0;z-index:60;background:var(--gelap);display:flex;flex-direction:column;justify-content:center;
+  padding:90px 8vw 30px;overflow-y:auto;visibility:hidden;opacity:0;transition:opacity .3s,visibility .3s}
+nav#menu.buka{visibility:visible;opacity:1}
+nav#menu a{font-family:var(--display);font-size:clamp(2.2rem,min(9.5vw,10vh),6.8rem);line-height:1.04;color:#fff;text-decoration:none;
+  text-transform:uppercase;transition:color .2s,padding-left .25s}
+nav#menu a:hover{color:var(--emas);padding-left:18px}
+
+/* Parallax */
+.plx{position:relative;overflow:hidden}
+.plx>img.bg{position:absolute;left:0;top:-15%;width:100%;height:130%;object-fit:cover;will-change:transform}
+
+/* Hero */
+.hero{min-height:94vh;display:flex;align-items:flex-end;padding:0 5vw 150px;color:#fff;background:var(--gelap)}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.5) 0%,rgba(0,0,0,.1) 35%,rgba(0,0,0,.85) 100%)}
+.hero-isi{position:relative;z-index:2;width:100%;max-width:1240px;margin:auto}
+.salam-hero{font-weight:600;letter-spacing:.22em;text-transform:uppercase;font-size:.85rem;margin-bottom:6px}
+.hero h1{font-family:var(--display);font-weight:400;font-size:clamp(5rem,19vw,17rem);line-height:.82;text-transform:uppercase;letter-spacing:.005em}
+.hero h1 span{display:block;white-space:nowrap;animation:naik .9s cubic-bezier(.2,.7,.2,1) both}
+.hero h1 span+span{animation-delay:.12s}
+@keyframes naik{from{transform:translateY(70px);opacity:0}to{transform:none;opacity:1}}
+.hero>.ganti{top:90px;bottom:auto}
+
+/* Strip agenda (seperti kartu jadwal pertandingan) */
+.agenda{position:relative;z-index:6;margin-top:-76px}
+.agenda .wrap{padding:0 5vw}
+.bar{display:grid;grid-template-columns:200px 1fr 1fr;background:#fff;box-shadow:0 18px 50px rgba(0,0,0,.28)}
+.bar .judul{background:var(--emas);color:var(--tinta);font-family:var(--display);font-size:1.7rem;line-height:1;padding:24px 18px;overflow-wrap:anywhere;display:flex;align-items:center;text-transform:uppercase}
+.acara{display:flex;gap:20px;align-items:center;padding:22px 26px;border-left:1px solid #e3e3df}
+.tgl{text-align:center;min-width:64px;font-family:var(--display);line-height:.9}
+.tgl b{display:block;font-weight:400;font-size:3.6rem}
+.tgl span{font-size:1.4rem;letter-spacing:.08em}
+.acara small{display:block;font-size:.72rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--zamrud)}
+.acara.lalu small{color:#8a8a85}
+.acara strong{display:block;font-size:1.1rem;line-height:1.25;text-transform:uppercase;font-weight:800;letter-spacing:-.01em;margin:3px 0}
+.acara span.ket{font-size:.9rem;color:#55554f}
+
+/* Judul bagian */
+section{padding:clamp(70px,10vw,140px) 0}
+.terang{background:#fff;color:var(--tinta)}
+.abu{background:var(--abu);color:var(--tinta)}
+.kelam{background:var(--gelap);color:#fff}
+h2{font-family:var(--display);font-weight:400;text-transform:uppercase;font-size:clamp(3.2rem,10vw,8.5rem);line-height:.88;letter-spacing:.005em;margin-bottom:clamp(28px,4vw,56px)}
+h2::after{content:"";display:block;width:90px;height:8px;background:var(--emas);margin-top:18px}
+
+/* Foto yang dapat diganti */
+.foto{position:relative;overflow:hidden;background:#222}
+.foto img{width:100%;height:100%;object-fit:cover;transition:transform .6s}
+.ganti{display:none;position:absolute;right:12px;bottom:12px;z-index:6;border:0;background:var(--emas);color:var(--tinta);
+  padding:8px 15px;border-radius:999px;font:inherit;font-size:.8rem;font-weight:800;cursor:pointer;box-shadow:0 2px 10px rgba(0,0,0,.4)}
+body.edit .ganti{display:block}
+body.edit .foto,body.edit .logo-box{outline:3px dashed var(--emas);outline-offset:-3px}
+.logo-box .ganti{right:auto;bottom:auto;left:50%;top:50%;transform:translate(-50%,-50%);padding:2px 6px;font-size:.6rem}
+
+/* Tentang */
+.dua{display:grid;grid-template-columns:5fr 6fr;gap:clamp(36px,7vw,110px);align-items:center}
+.dua .foto{aspect-ratio:3/4}
+.dua p{font-size:1.1rem;max-width:56ch}
+.dua p+p{margin-top:16px}
+
+/* Statistik besar */
+.angka{padding:clamp(56px,8vw,100px) 0}
+.angka ul{list-style:none;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:30px}
+.angka li{border-top:2px solid #333;padding-top:16px}
+.angka b{display:block;font-family:var(--display);font-weight:400;font-size:clamp(3.5rem,8vw,7rem);line-height:.9;color:var(--emas)}
+.angka span{text-transform:uppercase;letter-spacing:.12em;font-size:.82rem;font-weight:600}
+
+/* Sejarah */
+.sej{display:grid;grid-template-columns:5fr 7fr;gap:clamp(30px,6vw,90px);align-items:start}
+.sej h2{position:sticky;top:90px;font-size:clamp(3rem,7vw,6.5rem)}
+.sej>*{min-width:0}
+.waktu{list-style:none;padding:0;border-top:2px solid var(--tinta)}
+.waktu li{display:grid;grid-template-columns:minmax(120px,220px) 1fr;gap:12px 36px;padding:26px 0;border-bottom:1px solid #c9c9c4;align-items:baseline}
+.waktu b{font-family:var(--display);font-weight:400;font-size:clamp(2rem,4.5vw,3.4rem);line-height:1;color:var(--zamrud)}
+
+/* Visi misi */
+.visi{color:#fff}
+.visi::after{content:"";position:absolute;inset:0;background:rgba(0,0,0,.78)}
+.visi .wrap{position:relative;z-index:2}
+.visi blockquote{font-family:var(--display);font-size:clamp(2.4rem,6.5vw,5.4rem);line-height:.98;text-transform:uppercase;max-width:20ch;margin-bottom:60px}
+.misi{list-style:none;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:26px}
+.misi li{border-top:3px solid var(--emas);padding-top:16px;font-weight:500}
+
+/* Kegiatan: kartu berita */
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:34px 26px}
+.kartu{position:relative;display:flex;flex-direction:column;color:var(--tinta)}
+.kartu .foto{aspect-ratio:16/10}
+.kartu:hover .foto img{transform:scale(1.05)}
+.kartu .ganti{top:12px;bottom:auto}
+.kartu .isi{padding:16px 0 4px;pointer-events:none}
+.kartu time{font-size:.78rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--zamrud)}
+.kartu h3{font-weight:800;font-size:1.3rem;line-height:1.12;text-transform:uppercase;letter-spacing:-.01em;margin:6px 0 8px}
+.kartu p{font-size:.95rem;color:#4b4b46}
+.kartu p::after{content:" […]"}
+.grid .tambah{aspect-ratio:16/10}
+
+/* Dokumentasi */
+.galeri{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.galeri .foto{aspect-ratio:1;cursor:zoom-in}
+.galeri .foto:hover img{transform:scale(1.07)}
+body.edit .galeri .foto{cursor:default}
+.galeri .foto:nth-child(1){grid-column:span 2;grid-row:span 2}
+.galeri .foto:nth-child(6){grid-column:span 2;aspect-ratio:2/1}
+#lb{border:0;background:transparent;padding:0;max-width:94vw;max-height:94vh}
+#lb::backdrop{background:rgba(0,0,0,.94)}
+#lb img{max-width:94vw;max-height:90vh;object-fit:contain;cursor:zoom-out}
+
+/* Sosmed */
+.sosmed{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px;max-width:1000px}
+.sos{display:flex;align-items:center;gap:18px;padding:26px 28px;background:var(--gelap);color:#fff;text-decoration:none;transition:background .2s,color .2s}
+.sos:hover{background:var(--emas);color:var(--tinta)}
+.sos svg{width:44px;height:44px;flex:none;fill:currentColor}
+.sos b{display:block;font-family:var(--display);font-weight:400;font-size:1.9rem;letter-spacing:.05em;text-transform:uppercase;line-height:1.05}
+.sos small{opacity:.75;font-size:.9rem}
+.ajak{max-width:52ch;font-size:1.1rem;margin-bottom:34px}
+
+/* Footer */
+footer{background:var(--gelap);color:#bdbdb8;padding:70px 0 0;overflow:hidden}
+.kaki{display:grid;grid-template-columns:2fr 1fr 1fr;gap:40px;padding-bottom:50px}
+.kaki h4{font-family:var(--display);font-weight:400;font-size:1.6rem;color:#fff;letter-spacing:.06em;margin-bottom:10px}
+.kaki a{display:block;color:inherit;text-decoration:none;padding:2px 0}
+.kaki a:hover{color:var(--emas)}
+.hak{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;padding:22px 0;border-top:1px solid #2a2a2a;font-size:.88rem}
+.kata-besar{font-family:var(--display);font-size:clamp(3rem,13.4vw,13rem);line-height:.8;color:#1b1b1b;white-space:nowrap;text-align:center;padding-top:20px;user-select:none}
+.reset{background:none;border:1px solid #555;color:#bdbdb8;padding:6px 14px;border-radius:999px;cursor:pointer;font:inherit;font-size:.82rem;display:none}
+body.edit .reset{display:inline-block}
+
+/* Kotak masuk */
+dialog#dlgMasuk,dialog#dlgKegiatan{border:0;border-radius:4px;padding:0;width:min(420px,92vw);background:var(--gading);color:var(--tinta);box-shadow:0 20px 60px rgba(0,0,0,.5)}
+dialog#dlgMasuk::backdrop,dialog#dlgKegiatan::backdrop{background:rgba(3,10,8,.7)}
+.dlg{padding:30px}
+.dlg h3{font-family:var(--display);font-weight:400;font-size:1.9rem;text-transform:uppercase;color:var(--zamrud);margin-bottom:6px}
+.dlg label{display:block;font-size:.9rem;font-weight:600;margin-bottom:4px}
+.dlg input{width:100%;padding:11px 12px;border:1px solid #8aa196;border-radius:3px;font:inherit;background:#fff;color:var(--tinta);margin-bottom:12px}
+.dlg .aksi{display:flex;gap:10px;justify-content:flex-end}
+.dlg .aksi button{padding:10px 22px;border-radius:3px;border:1px solid var(--zamrud);cursor:pointer;font:inherit;font-weight:600;background:transparent;color:var(--zamrud)}
+.dlg .aksi button.utama{background:var(--zamrud);color:#fff}
+.dlg textarea{width:100%;min-height:90px;resize:vertical;padding:11px 12px;border:1px solid #8aa196;border-radius:3px;font:inherit;background:#fff;color:var(--tinta);margin-bottom:12px}
+.tambah{display:none;place-items:center;text-align:center;border:2px dashed var(--emas);background:transparent;color:var(--emas);cursor:pointer;font:inherit;font-weight:600;padding:12px}
+body.edit .tambah{display:grid}
+.galeri .tambah{aspect-ratio:1}
+.grid .tambah{aspect-ratio:3/4}
+.terang .tambah{color:var(--zamrud);border-color:var(--zamrud)}
+.alat{display:none;position:absolute;top:12px;left:12px;z-index:7;gap:6px}
+body.edit .alat{display:flex}
+.alat button{border:0;background:var(--gading);color:var(--tinta);padding:6px 12px;border-radius:999px;font:inherit;font-size:.78rem;font-weight:600;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.4)}
+.alat button.hapus{background:#b3261e;color:#fff}
+dialog#dlgGaleriKeg{border:0;padding:0;width:min(1040px,96vw);max-height:92vh;background:var(--gelap2);color:var(--gading);box-shadow:0 20px 60px rgba(0,0,0,.6)}
+dialog#dlgGaleriKeg::backdrop{background:rgba(3,10,8,.85)}
+.gk{padding:clamp(20px,4vw,40px);position:relative}
+.gk-tutup{position:absolute;top:14px;right:14px;background:none;border:1px solid rgba(244,241,232,.4);color:var(--gading);width:38px;height:38px;border-radius:50%;cursor:pointer;font-size:1.1rem}
+.gk time{color:var(--emas);font-weight:600;font-size:.9rem}
+.gk h3{font-family:var(--display);font-weight:400;text-transform:uppercase;font-size:clamp(1.8rem,5vw,3rem);line-height:1.05;margin:4px 0 10px;padding-right:48px}
+.gk-desk{max-width:70ch;opacity:.9;margin-bottom:22px}
+.gk-alat{display:none;margin-bottom:18px}
+body.edit .gk-alat{display:block}
+.btn-emas{border:0;background:var(--emas);color:var(--tinta);padding:10px 20px;font:inherit;font-weight:600;border-radius:999px;cursor:pointer}
+.gk-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px}
+.gk figure{margin:0;position:relative}
+.gk figure img{width:100%;aspect-ratio:4/3;object-fit:cover;cursor:zoom-in;background:#1b3029}
+body.edit .gk figure img{cursor:default}
+.gk figcaption{font-size:.9rem;padding-top:8px;opacity:.92}
+.gk figcaption:empty{display:none}
+.gk .kap{display:none;width:100%;margin-top:8px;padding:8px 10px;border:1px solid #4d6b60;background:rgba(255,255,255,.06);color:var(--gading);font:inherit;font-size:.9rem;border-radius:3px}
+body.edit .gk figcaption{display:none}
+body.edit .gk .kap{display:block}
+.gk .hapus-foto{display:none;position:absolute;top:8px;right:8px;border:0;background:#b3261e;color:#fff;padding:5px 11px;border-radius:999px;font:inherit;font-size:.78rem;font-weight:600;cursor:pointer}
+body.edit .gk .hapus-foto{display:block}
+.gk-kosong{opacity:.7}
+.kartu .buka{position:absolute;inset:0;z-index:2;background:none;border:0;cursor:pointer}
+.kartu .jumlah{position:absolute;top:12px;right:12px;z-index:4;background:var(--emas);color:var(--tinta);font-size:.78rem;font-weight:600;padding:3px 11px;border-radius:999px}
+.galat{color:#b3261e;font-size:.88rem;min-height:1.3em;margin-bottom:8px}
+.catatan{font-size:.85rem;opacity:.75;margin-bottom:16px}
+#pesan{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:var(--gading);color:var(--tinta);padding:11px 20px;border-radius:4px;
+  z-index:99;font-size:.9rem;font-weight:500;opacity:0;pointer-events:none;transition:opacity .25s}
+#pesan.tampil{opacity:1}
+
+
+.grid .tambah{aspect-ratio:16/10}
+.terang .tambah,.abu .tambah{color:var(--zamrud);border-color:var(--zamrud)}
+
+@media (max-width:900px){
+  .brand span:not(.logo-box){display:none}
+  .pill{padding:6px 11px;font-size:.72rem}
+  .kanan{gap:6px}
+  .bar{grid-template-columns:1fr}
+  .bar .judul{padding:16px 24px;font-size:1.6rem}
+  .acara{border-left:0;border-top:1px solid #e3e3df}
+  .dua,.sej{grid-template-columns:1fr}
+  .sej h2{position:static}
+  .waktu li{grid-template-columns:1fr;gap:6px}
+  .galeri{grid-template-columns:repeat(2,1fr)}
+  .galeri .foto:nth-child(1){grid-column:span 2;grid-row:span 1;aspect-ratio:3/2}
+  .kaki{grid-template-columns:1fr}
+  .hero{padding-bottom:110px}
+  .agenda{margin-top:-60px}
+}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+
+<header id="kepala">
+  <button class="burger" id="burger" type="button" aria-label="Buka menu" aria-expanded="false" aria-controls="menu">
+    <span class="gars"><i></i><i></i></span><b class="t-buka">MENU</b><b class="t-tutup">TUTUP</b>
+  </button>
+  <a class="brand" href="#beranda" aria-label="MEDIA DARUL ULUM, ke beranda">
+    <span class="logo-box"><img data-foto="logo" data-label="LOGO" alt="Logo MEDIA DARUL ULUM"><button class="ganti" type="button">Ganti</button></span>
+    <span>MEDIA DARUL ULUM</span>
+  </a>
+  <div class="kanan">
+    <button class="pill" id="toggleEdit" type="button" aria-pressed="false" hidden>Ubah foto</button>
+    <span class="salam" id="salam" hidden></span>
+    <button class="pill" id="btnMasuk" type="button">Masuk pengembang</button>
+    <button class="pill" id="btnKeluar" type="button" hidden>Keluar</button>
+  </div>
+</header>
+
+<nav id="menu" aria-label="Menu utama">
+  <a href="#beranda">Beranda</a>
+  <a href="#tentang">Tentang</a>
+  <a href="#sejarah">Sejarah</a>
+  <a href="#visi-misi">Visi &amp; Misi</a>
+  <a href="#kegiatan">Kegiatan</a>
+  <a href="#dokumentasi">Dokumentasi</a>
+  <a href="#sosmed">Sosmed</a>
+</nav>
+
+<main>
+  <div class="hero plx" id="beranda">
+    <img class="bg" data-foto="hero" data-label="FOTO BERANDA" alt="">
+    <button class="ganti" type="button">Ganti foto latar</button>
+    <div class="hero-isi">
+      <p class="salam-hero">Selamat datang di website</p>
+      <h1><span>Media</span><span>Darul Ulum</span></h1>
+    </div>
+  </div>
+
+  <!-- Agenda: ganti tanggal, status, judul, dan keterangan sesuai kegiatan sebenarnya -->
+  <div class="agenda">
+    <div class="wrap">
+      <div class="bar">
+        <div class="judul">Agenda<br>madrasah</div>
+        <article class="acara lalu">
+          <div class="tgl"><b>21</b><span>NOV</span></div>
+          <div><small>Selesai · Kategori</small><strong>Nama agenda yang sudah lewat</strong><span class="ket">Tempat atau keterangan singkat</span></div>
+        </article>
+        <article class="acara">
+          <div class="tgl"><b>27</b><span>NOV</span></div>
+          <div><small>Akan datang · 07.30 WIB</small><strong>Nama agenda berikutnya</strong><span class="ket">Tempat atau keterangan singkat</span></div>
+        </article>
+      </div>
+    </div>
+  </div>
+
+  <section id="tentang" class="terang">
+    <div class="wrap dua">
+      <div class="foto"><img data-foto="tentang" data-label="FOTO TENTANG" alt="Gedung madrasah"><button class="ganti" type="button">Ganti foto</button></div>
+      <div>
+        <h2>Tentang kami</h2>
+        <p>Tulis profil singkat madrasah di sini: lokasi, jenjang pendidikan, jumlah siswa, dan keunggulan program.</p>
+        <p>Paragraf kedua dapat berisi ciri khas pembelajaran, fasilitas, atau prestasi yang ingin ditonjolkan.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Statistik: ganti angka 000 dengan data sebenarnya -->
+  <section class="angka kelam" aria-label="Madrasah dalam angka">
+    <div class="wrap">
+      <ul>
+        <li><b>000</b><span>Siswa</span></li>
+        <li><b>00</b><span>Guru dan tenaga pendidik</span></li>
+        <li><b>0000</b><span>Tahun berdiri</span></li>
+        <li><b>00</b><span>Prestasi</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="sejarah" class="abu">
+    <div class="wrap sej">
+      <h2>Data sejarah</h2>
+      <ol class="waktu">
+        <li><b>Tahun berdiri</b><p>Isi dengan sejarah pendirian dan tokoh pendirinya.</p></li>
+        <li><b>Tahun perkembangan</b><p>Isi dengan perubahan status, gedung, atau program penting.</p></li>
+        <li><b>Tahun akreditasi</b><p>Isi dengan capaian akreditasi dan penghargaan.</p></li>
+        <li><b>Sekarang</b><p>Isi dengan kondisi terkini madrasah.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="visi plx" id="visi-misi">
+    <img class="bg" data-foto="visi" data-label="FOTO VISI MISI" alt="">
+    <button class="ganti" type="button" style="top:14px;bottom:auto">Ganti foto latar</button>
+    <div class="wrap">
+      <h2>Visi &amp; misi</h2>
+      <blockquote>“Tuliskan visi madrasah di sini dalam satu kalimat yang jelas.”</blockquote>
+      <ul class="misi">
+        <li>Misi pertama madrasah.</li>
+        <li>Misi kedua madrasah.</li>
+        <li>Misi ketiga madrasah.</li>
+        <li>Misi keempat madrasah.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="kegiatan" class="terang">
+    <div class="wrap">
+      <h2>Kegiatan</h2>
+      <div class="grid">
+        <article class="kartu"><div class="foto"><img data-foto="kegiatan1" data-label="KEGIATAN 1" alt=""><button class="ganti" type="button">Ganti foto</button></div>
+          <div class="isi"><time>Tanggal kegiatan</time><h3>Nama kegiatan pertama</h3><p>Deskripsi singkat kegiatan</p></div></article>
+        <article class="kartu"><div class="foto"><img data-foto="kegiatan2" data-label="KEGIATAN 2" alt=""><button class="ganti" type="button">Ganti foto</button></div>
+          <div class="isi"><time>Tanggal kegiatan</time><h3>Nama kegiatan kedua</h3><p>Deskripsi singkat kegiatan</p></div></article>
+        <article class="kartu"><div class="foto"><img data-foto="kegiatan3" data-label="KEGIATAN 3" alt=""><button class="ganti" type="button">Ganti foto</button></div>
+          <div class="isi"><time>Tanggal kegiatan</time><h3>Nama kegiatan ketiga</h3><p>Deskripsi singkat kegiatan</p></div></article>
+        <button class="tambah" id="tambahKeg" type="button">+ Tambah kegiatan</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="dokumentasi" class="kelam">
+    <div class="wrap">
+      <h2>Dokumentasi</h2>
+      <div class="galeri">
+        <div class="foto"><img data-foto="dok1" data-label="DOKUMENTASI 1" alt=""><button class="ganti" type="button">Ganti</button></div>
+        <div class="foto"><img data-foto="dok2" data-label="DOKUMENTASI 2" alt=""><button class="ganti" type="button">Ganti</button></div>
+        <div class="foto"><img data-foto="dok3" data-label="DOKUMENTASI 3" alt=""><button class="ganti" type="button">Ganti</button></div>
+        <div class="foto"><img data-foto="dok4" data-label="DOKUMENTASI 4" alt=""><button class="ganti" type="button">Ganti</button></div>
+        <div class="foto"><img data-foto="dok5" data-label="DOKUMENTASI 5" alt=""><button class="ganti" type="button">Ganti</button></div>
+        <div class="foto"><img data-foto="dok6" data-label="DOKUMENTASI 6" alt=""><button class="ganti" type="button">Ganti</button></div>
+        <button class="tambah" id="tambahDok" type="button">+ Tambah foto</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="sosmed" class="abu">
+    <div class="wrap">
+      <h2>Ikuti kami</h2>
+      <p class="ajak">Ikuti akun resmi MEDIA DARUL ULUM untuk kabar dan dokumentasi kegiatan terbaru.</p>
+      <!-- GANTI alamat href dan tulisan @username di bawah dengan akun sebenarnya -->
+      <div class="sosmed">
+        <a class="sos" href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" aria-label="Instagram MEDIA DARUL ULUM (membuka tab baru)">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.2c3.2 0 3.6 0 4.8.1 3.3.1 4.8 1.7 4.9 4.9.1 1.3.1 1.6.1 4.8s0 3.6-.1 4.8c-.1 3.2-1.7 4.8-4.9 4.9-1.3.1-1.6.1-4.8.1s-3.6 0-4.8-.1c-3.3-.1-4.8-1.7-4.9-4.9C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.8C2.4 3.9 4 2.4 7.2 2.3 8.4 2.2 8.8 2.2 12 2.2zM12 0C8.7 0 8.3 0 7.1.1 2.7.3.3 2.7.1 7.1 0 8.3 0 8.7 0 12s0 3.7.1 4.9c.2 4.4 2.6 6.8 7 7C8.3 24 8.7 24 12 24s3.7 0 4.9-.1c4.4-.2 6.8-2.6 7-7 .1-1.2.1-1.6.1-4.9s0-3.7-.1-4.9c-.2-4.4-2.6-6.8-7-7C15.7 0 15.3 0 12 0zm0 5.8a6.2 6.2 0 1 0 0 12.4 6.2 6.2 0 0 0 0-12.4zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.4-11.8a1.4 1.4 0 1 0 0 2.9 1.4 1.4 0 0 0 0-2.9z"/></svg>
+          <span><b>Instagram</b><small>@usernameanda</small></span>
+        </a>
+        <a class="sos" href="https://www.tiktok.com/" target="_blank" rel="noopener noreferrer" aria-label="TikTok MEDIA DARUL ULUM (membuka tab baru)">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>
+          <span><b>TikTok</b><small>@usernameanda</small></span>
+        </a>
+        <a class="sos" href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer" aria-label="Facebook MEDIA DARUL ULUM (membuka tab baru)">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+          <span><b>Facebook</b><small>Nama halaman Anda</small></span>
+        </a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="kaki">
+      <div><h4>MEDIA DARUL ULUM</h4><p>Alamat lengkap madrasah.<br>Telepon · Email</p></div>
+      <div><h4>Halaman</h4><a href="#tentang">Tentang</a><a href="#sejarah">Sejarah</a><a href="#visi-misi">Visi &amp; Misi</a></div>
+      <div><h4>Lainnya</h4><a href="#kegiatan">Kegiatan</a><a href="#dokumentasi">Dokumentasi</a><a href="#sosmed">Sosmed</a></div>
+    </div>
+    <div class="hak">
+      <span>© 2026 MEDIA DARUL ULUM. Seluruh hak dilindungi.</span>
+      <button class="reset" id="resetFoto" type="button">Kembalikan semua foto ke bawaan</button>
+    </div>
+  </div>
+  <div class="kata-besar" aria-hidden="true">MEDIA DARUL ULUM</div>
+</footer>
+
+<dialog id="dlgMasuk" aria-labelledby="judulMasuk">
+  <form method="dialog" class="dlg" id="formMasuk" autocomplete="off">
+    <h3 id="judulMasuk">Masuk pengembang</h3>
+    <p class="catatan">Khusus pengembang. Setelah masuk, fitur ubah foto akan muncul.</p>
+    <label for="inSandi">Kata sandi</label>
+    <input id="inSandi" type="password" autocomplete="current-password">
+    <p class="galat" id="galat" role="alert"></p>
+    <div class="aksi">
+      <button type="button" id="batalMasuk">Batal</button>
+      <button type="submit" class="utama">Masuk</button>
+    </div>
+  </form>
+</dialog>
+
+<dialog id="dlgKegiatan" aria-labelledby="judulKeg">
+  <form method="dialog" class="dlg" id="formKeg" autocomplete="off">
+    <h3 id="judulKeg">Tambah kegiatan</h3>
+    <label for="kgTanggal">Tanggal</label>
+    <input id="kgTanggal" maxlength="40" placeholder="Contoh: 12 Januari 2026">
+    <label for="kgJudul">Judul kegiatan</label>
+    <input id="kgJudul" maxlength="80" required>
+    <label for="kgDesk">Deskripsi singkat</label>
+    <textarea id="kgDesk" maxlength="200"></textarea>
+    <label for="kgFoto" id="kgFotoLabel">Foto (boleh pilih banyak, keterangan diisi setelah disimpan)</label>
+    <input id="kgFoto" type="file" accept="image/*" multiple>
+    <p class="galat" id="kgGalat" role="alert"></p>
+    <div class="aksi"><button type="button" id="kgBatal">Batal</button><button type="submit" class="utama">Simpan</button></div>
+  </form>
+</dialog>
+
+<dialog id="dlgGaleriKeg" aria-labelledby="gkJudul">
+  <div class="gk">
+    <button class="gk-tutup" id="gkTutup" type="button" aria-label="Tutup">✕</button>
+    <time id="gkTgl"></time>
+    <h3 id="gkJudul"></h3>
+    <p class="gk-desk" id="gkDesk"></p>
+    <div class="gk-alat"><button class="btn-emas" id="gkTambah" type="button">+ Tambah foto</button></div>
+    <div class="gk-grid" id="gkGrid"></div>
+  </div>
+</dialog>
+
+<dialog id="lb" aria-label="Foto diperbesar"><img alt=""></dialog>
+
+<div id="pesan" role="status" aria-live="polite"></div>
+<input type="file" id="berkas" accept="image/*" hidden>
+
+<script>
+(function(){
+  var KUNCI = "mdu-foto:";
+  var pesanEl = document.getElementById("pesan"), timer;
+  function pesan(t){ pesanEl.textContent = t; pesanEl.classList.add("tampil");
+    clearTimeout(timer); timer = setTimeout(function(){ pesanEl.classList.remove("tampil"); }, 2600); }
+
+  // Gambar bawaan (placeholder SVG) bila belum ada foto
+  function placeholder(label, i){
+    var h = (150 + i * 23) % 360;
+    var svg = '<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1">'
+      + '<stop offset="0" stop-color="hsl(' + h + ',45%,32%)"/><stop offset="1" stop-color="hsl(' + (h + 40) + ',50%,18%)"/></linearGradient></defs>'
+      + '<rect width="1200" height="800" fill="url(#g)"/><text x="600" y="410" font-family="Georgia,serif" font-size="54" fill="#ffffff" fill-opacity=".8" text-anchor="middle">'
+      + label + '</text></svg>';
+    return "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg);
+  }
+
+  var gambar = Array.prototype.slice.call(document.querySelectorAll("img[data-foto]"));
+  function muat(){
+    gambar.forEach(function(img, i){
+      var id = img.getAttribute("data-foto"), simpan = null;
+      try { simpan = localStorage.getItem(KUNCI + id); } catch(e){}
+      img.src = simpan || placeholder(img.getAttribute("data-label") || id, i);
+    });
+  }
+  muat();
+
+  // ===== Masuk khusus pengembang =====
+  // Hash SHA-256 kata sandi pengembang (bukan kata sandinya). Bawaan: darululum2026. GANTI sebelum dipublikasikan.
+  var HASH_PENGEMBANG = "1bcf22ec47f354a0097a32daba259f7d3720622660597475ea80e20de100ddad";
+  var SESI = "mdu-sesi", pengembang = false, gagal = 0, kunciSampai = 0;
+
+  function sha256(t){
+    if(!(window.crypto && crypto.subtle)) return Promise.reject(new Error("no-crypto"));
+    return crypto.subtle.digest("SHA-256", new TextEncoder().encode(t)).then(function(b){
+      return Array.prototype.map.call(new Uint8Array(b), function(x){ return ("0" + x.toString(16)).slice(-2); }).join("");
+    });
+  }
+  function adalahPengembang(){ return pengembang; }
+  window.mduPengembang = adalahPengembang; window.mduPesan = pesan;
+
+  var elMasuk = document.getElementById("btnMasuk"), elKeluar = document.getElementById("btnKeluar"),
+      elSalam = document.getElementById("salam"), elEdit = document.getElementById("toggleEdit"),
+      dlg = document.getElementById("dlgMasuk"), elGalat = document.getElementById("galat");
+
+  function tampilkanPeran(){
+    elMasuk.hidden = pengembang; elKeluar.hidden = !pengembang; elSalam.hidden = !pengembang;
+    elEdit.hidden = !pengembang;
+    elSalam.innerHTML = "";
+    if(pengembang){
+      var b = document.createElement("span"); b.className = "badge"; b.textContent = "Pengembang"; elSalam.appendChild(b);
+    } else {
+      document.body.classList.remove("edit");
+      elEdit.setAttribute("aria-pressed", "false"); elEdit.textContent = "Ubah foto";
+    }
+  }
+  try { pengembang = sessionStorage.getItem(SESI) === HASH_PENGEMBANG; } catch(e){}
+  tampilkanPeran();
+
+  elMasuk.addEventListener("click", function(){ elGalat.textContent = ""; dlg.showModal(); document.getElementById("inSandi").focus(); });
+  document.getElementById("batalMasuk").addEventListener("click", function(){ dlg.close(); });
+  elKeluar.addEventListener("click", function(){
+    pengembang = false;
+    try { sessionStorage.removeItem(SESI); } catch(e){}
+    tampilkanPeran(); pesan("Anda sudah keluar.");
+  });
+
+  document.getElementById("formMasuk").addEventListener("submit", function(e){
+    e.preventDefault();
+    if(Date.now() < kunciSampai){ elGalat.textContent = "Terlalu banyak percobaan. Tunggu beberapa detik."; return; }
+    var sandi = document.getElementById("inSandi").value;
+    if(!sandi){ elGalat.textContent = "Kata sandi wajib diisi."; return; }
+    sha256(sandi).then(function(h){
+      if(h === HASH_PENGEMBANG){
+        gagal = 0; pengembang = true;
+        try { sessionStorage.setItem(SESI, HASH_PENGEMBANG); } catch(e){}
+        tampilkanPeran(); document.getElementById("inSandi").value = ""; dlg.close(); pesan("Masuk sebagai pengembang.");
+      } else {
+        gagal++; if(gagal >= 5){ kunciSampai = Date.now() + 30000; gagal = 0; }
+        elGalat.textContent = "Kata sandi salah.";
+      }
+    }).catch(function(){ elGalat.textContent = "Browser tidak mendukung pemeriksaan sandi. Buka lewat https atau localhost."; });
+  });
+
+  // Mode ubah foto (khusus pengembang)
+  var tombol = document.getElementById("toggleEdit");
+  tombol.addEventListener("click", function(){
+    if(!adalahPengembang()) return;
+    var aktif = document.body.classList.toggle("edit");
+    tombol.setAttribute("aria-pressed", aktif);
+    tombol.textContent = aktif ? "Selesai" : "Ubah foto";
+  });
+
+  // Ganti foto: pilih berkas, kecilkan ukuran, simpan di browser
+  var berkas = document.getElementById("berkas"), target = null;
+  document.addEventListener("click", function(e){
+    var b = e.target.closest(".ganti");
+    if(!b) return;
+    if(!adalahPengembang()){ document.body.classList.remove("edit"); return; }
+    e.preventDefault(); e.stopPropagation();
+    target = b.parentElement.querySelector("img[data-foto]");
+    if(target){ berkas.value = ""; berkas.click(); }
+  });
+  berkas.addEventListener("change", function(){
+    var f = berkas.files[0];
+    if(!f || !target || !adalahPengembang()) return;
+    var rd = new FileReader();
+    rd.onload = function(){
+      var im = new Image();
+      im.onload = function(){
+        var maks = target.getAttribute("data-foto") === "logo" ? 400 : 1400;
+        var s = Math.min(1, maks / Math.max(im.width, im.height));
+        var c = document.createElement("canvas");
+        c.width = Math.round(im.width * s); c.height = Math.round(im.height * s);
+        c.getContext("2d").drawImage(im, 0, 0, c.width, c.height);
+        var hasil = c.toDataURL(f.type === "image/png" && maks === 400 ? "image/png" : "image/jpeg", 0.8);
+        target.src = hasil;
+        try { localStorage.setItem(KUNCI + target.getAttribute("data-foto"), hasil); pesan("Foto diganti dan disimpan di browser ini."); }
+        catch(err){ pesan("Foto diganti, tetapi penyimpanan browser penuh."); }
+      };
+      im.src = rd.result;
+    };
+    rd.readAsDataURL(f);
+  });
+
+  document.getElementById("resetFoto").addEventListener("click", function(){
+    if(!adalahPengembang()) return;
+    if(!confirm("Kembalikan semua foto ke gambar bawaan?")) return;
+    try { Object.keys(localStorage).forEach(function(k){ if(k.indexOf(KUNCI) === 0) localStorage.removeItem(k); }); } catch(e){}
+    muat(); pesan("Semua foto dikembalikan.");
+  });
+
+  // Efek parallax
+  var plx = Array.prototype.slice.call(document.querySelectorAll(".plx"));
+  var kurang = window.matchMedia("(prefers-reduced-motion: reduce)").matches, tunggu = false;
+  function geser(){
+    tunggu = false;
+    var vh = window.innerHeight;
+    plx.forEach(function(el){
+      var r = el.getBoundingClientRect();
+      if(r.bottom < 0 || r.top > vh) return;
+      var bg = el.querySelector("img.bg");
+      bg.style.transform = "translate3d(0," + ((r.top + r.height / 2 - vh / 2) * -0.18).toFixed(1) + "px,0)";
+    });
+  }
+  if(!kurang){
+    window.addEventListener("scroll", function(){ if(!tunggu){ tunggu = true; requestAnimationFrame(geser); } }, {passive:true});
+    window.addEventListener("resize", geser);
+    geser();
+  }
+})();
+</script>
+
+<script>
+(function(){
+  // Header padat saat digulir
+  var kepala = document.getElementById("kepala");
+  function atur(){ kepala.classList.toggle("padat", window.scrollY > 40); }
+  window.addEventListener("scroll", atur, {passive:true}); atur();
+
+  // Menu HP
+  var burger = document.getElementById("burger"), menu = document.getElementById("menu");
+  function tutup(){ menu.classList.remove("buka"); burger.setAttribute("aria-expanded", "false"); }
+  burger.addEventListener("click", function(){
+    var b = menu.classList.toggle("buka"); burger.setAttribute("aria-expanded", b);
+  });
+  menu.addEventListener("click", function(e){ if(e.target.tagName === "A") tutup(); });
+
+  // Perbesar foto dokumentasi dan kegiatan (nonaktif saat mode ubah foto)
+  var lb = document.getElementById("lb"), lbImg = lb.querySelector("img");
+  document.addEventListener("click", function(e){
+    var im = e.target.closest(".galeri .foto img, .kartu .foto img, .gk-grid img");
+    if(!im || document.body.classList.contains("edit")) return;
+    lbImg.src = im.src; lb.showModal();
+  });
+  lb.addEventListener("click", function(){ lb.close(); });
+})();
+</script>
+<script>
+(function(){
+  var KD = "mdu-dok", KK = "mdu-kegiatan";
+  function dev(){ return window.mduPengembang && window.mduPengembang(); }
+  function info(t){ if(window.mduPesan) window.mduPesan(t); }
+  function baca(k){ try { return JSON.parse(localStorage.getItem(k) || "[]"); } catch(e){ return []; } }
+  function tulis(k, v){
+    try { localStorage.setItem(k, JSON.stringify(v)); return true; }
+    catch(e){ info("Penyimpanan browser penuh. Hapus beberapa foto lalu coba lagi."); return false; }
+  }
+  function kecilkan(file, maks){
+    return new Promise(function(ok, gagal){
+      var rd = new FileReader();
+      rd.onerror = gagal;
+      rd.onload = function(){
+        var im = new Image();
+        im.onerror = gagal;
+        im.onload = function(){
+          var s = Math.min(1, maks / Math.max(im.width, im.height)), c = document.createElement("canvas");
+          c.width = Math.round(im.width * s); c.height = Math.round(im.height * s);
+          c.getContext("2d").drawImage(im, 0, 0, c.width, c.height);
+          ok(c.toDataURL("image/jpeg", 0.72));
+        };
+        im.src = rd.result;
+      };
+      rd.readAsDataURL(file);
+    });
+  }
+  function ph(label){
+    return "data:image/svg+xml;charset=utf-8," + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="900" height="1200"><rect width="900" height="1200" fill="#1b3029"/><text x="450" y="610" font-family="Georgia,serif" font-size="48" fill="#fff" fill-opacity=".7" text-anchor="middle">' + label + '</text></svg>');
+  }
+  function el(tag, cls, teks){ var e = document.createElement(tag); if(cls) e.className = cls; if(teks) e.textContent = teks; return e; }
+
+  // ===== Dokumentasi: tambah dan hapus foto =====
+  var galeri = document.querySelector(".galeri"), tombolDok = document.getElementById("tambahDok");
+  var pilihDok = document.createElement("input"); pilihDok.type = "file"; pilihDok.accept = "image/*"; pilihDok.multiple = true;
+
+  function renderDok(){
+    Array.prototype.slice.call(galeri.querySelectorAll(".dinamis")).forEach(function(n){ n.remove(); });
+    baca(KD).forEach(function(src, i){
+      var f = el("div", "foto dinamis"), im = el("img"); im.src = src; im.alt = "Dokumentasi tambahan " + (i + 1);
+      var alat = el("div", "alat"), h = el("button", "hapus", "Hapus"); h.type = "button"; h.setAttribute("data-i", i);
+      alat.appendChild(h); f.appendChild(im); f.appendChild(alat);
+      galeri.insertBefore(f, tombolDok);
+    });
+  }
+  tombolDok.addEventListener("click", function(){ if(dev()){ pilihDok.value = ""; pilihDok.click(); } });
+  pilihDok.addEventListener("change", function(){
+    if(!dev() || !pilihDok.files.length) return;
+    Promise.all(Array.prototype.map.call(pilihDok.files, function(f){ return kecilkan(f, 1200); })).then(function(hasil){
+      var daftar = baca(KD).concat(hasil);
+      if(tulis(KD, daftar)){ renderDok(); info(hasil.length + " foto ditambahkan."); }
+    }).catch(function(){ info("Salah satu berkas bukan gambar yang valid."); });
+  });
+  galeri.addEventListener("click", function(e){
+    var b = e.target.closest(".hapus");
+    if(!b || !dev()) return;
+    if(!confirm("Hapus foto ini dari dokumentasi?")) return;
+    var d = baca(KD); d.splice(+b.getAttribute("data-i"), 1);
+    if(tulis(KD, d)){ renderDok(); info("Foto dihapus."); }
+  });
+
+  // ===== Kegiatan: banyak foto + keterangan (disimpan di IndexedDB, kapasitas jauh lebih besar) =====
+  var dbp = new Promise(function(ok, no){
+    if(!window.indexedDB){ no(new Error("tidak ada IndexedDB")); return; }
+    var r = indexedDB.open("mdu", 1);
+    r.onupgradeneeded = function(){ r.result.createObjectStore("kv"); };
+    r.onsuccess = function(){ ok(r.result); };
+    r.onerror = function(){ no(r.error); };
+  });
+  function idbGet(k){ return dbp.then(function(db){ return new Promise(function(ok, no){
+    var q = db.transaction("kv").objectStore("kv").get(k); q.onsuccess = function(){ ok(q.result); }; q.onerror = function(){ no(q.error); }; }); }); }
+  function idbSet(k, v){ return dbp.then(function(db){ return new Promise(function(ok, no){
+    var t = db.transaction("kv", "readwrite"); t.objectStore("kv").put(v, k); t.oncomplete = ok; t.onerror = function(){ no(t.error); }; }); }); }
+
+  var data = [], aktif = -1;
+  function simpanKeg(){ return idbSet(KK, data).catch(function(){ info("Gagal menyimpan. Penyimpanan browser mungkin penuh atau dinonaktifkan."); }); }
+
+  var grid = document.querySelector("#kegiatan .grid"), tombolKeg = document.getElementById("tambahKeg");
+  var dlg = document.getElementById("dlgKegiatan"), form = document.getElementById("formKeg"), galat = document.getElementById("kgGalat");
+  var f_tgl = document.getElementById("kgTanggal"), f_judul = document.getElementById("kgJudul"),
+      f_desk = document.getElementById("kgDesk"), f_foto = document.getElementById("kgFoto"), sunting = -1;
+  var gk = document.getElementById("dlgGaleriKeg"), gkGrid = document.getElementById("gkGrid");
+  var pilihFoto = document.createElement("input"); pilihFoto.type = "file"; pilihFoto.accept = "image/*"; pilihFoto.multiple = true;
+
+  function renderKeg(){
+    Array.prototype.slice.call(grid.querySelectorAll(".dinamis")).forEach(function(n){ n.remove(); });
+    data.forEach(function(k, i){
+      var a = el("article", "kartu dinamis"), f = el("div", "foto"), im = el("img");
+      im.src = k.foto.length ? k.foto[0].s : ph("BELUM ADA FOTO"); im.alt = ""; f.appendChild(im);
+      var buka = el("button", "buka"); buka.type = "button"; buka.setAttribute("data-i", i); buka.setAttribute("aria-label", "Lihat foto kegiatan: " + k.j);
+      var alat = el("div", "alat"), u = el("button", "ubah", "Ubah"), h = el("button", "hapus", "Hapus");
+      u.type = h.type = "button"; u.setAttribute("data-i", i); h.setAttribute("data-i", i);
+      alat.appendChild(u); alat.appendChild(h);
+      var isi = el("div", "isi"); isi.appendChild(el("time", "", k.t || ""));
+      isi.appendChild(el("h3", "", k.j)); isi.appendChild(el("p", "", k.d || ""));
+      a.appendChild(f); a.appendChild(buka); a.appendChild(el("span", "jumlah", k.foto.length + " foto")); a.appendChild(alat); a.appendChild(isi);
+      grid.insertBefore(a, tombolKeg);
+    });
+  }
+
+  // Tampilan semua foto satu kegiatan
+  function tampil(i){
+    aktif = i; var k = data[i];
+    document.getElementById("gkTgl").textContent = k.t || "";
+    document.getElementById("gkJudul").textContent = k.j;
+    document.getElementById("gkDesk").textContent = k.d || "";
+    gkGrid.innerHTML = "";
+    if(!k.foto.length){ gkGrid.appendChild(el("p", "gk-kosong", "Belum ada foto untuk kegiatan ini.")); }
+    k.foto.forEach(function(ft, j){
+      var fig = el("figure"), im = el("img"); im.src = ft.s; im.alt = ft.k || ("Foto " + (j + 1) + " " + k.j);
+      var cap = el("figcaption", "", ft.k || "");
+      var inp = el("input", "kap"); inp.type = "text"; inp.maxLength = 160; inp.value = ft.k || ""; inp.placeholder = "Tulis keterangan foto";
+      inp.setAttribute("aria-label", "Keterangan foto " + (j + 1)); inp.setAttribute("data-j", j);
+      var h = el("button", "hapus-foto", "Hapus"); h.type = "button"; h.setAttribute("data-j", j);
+      fig.appendChild(im); fig.appendChild(cap); fig.appendChild(inp); fig.appendChild(h); gkGrid.appendChild(fig);
+    });
+    if(!gk.open) gk.showModal();
+  }
+  document.getElementById("gkTutup").addEventListener("click", function(){ gk.close(); });
+  gk.addEventListener("click", function(e){ if(e.target === gk) gk.close(); });
+
+  gkGrid.addEventListener("change", function(e){
+    var inp = e.target.closest(".kap");
+    if(!inp || !dev() || aktif < 0) return;
+    var j = +inp.getAttribute("data-j"), v = inp.value.trim();
+    data[aktif].foto[j].k = v;
+    inp.parentElement.querySelector("figcaption").textContent = v;
+    simpanKeg().then(function(){ info("Keterangan disimpan."); });
+  });
+  gkGrid.addEventListener("click", function(e){
+    var h = e.target.closest(".hapus-foto");
+    if(!h || !dev() || aktif < 0) return;
+    if(!confirm("Hapus foto ini?")) return;
+    data[aktif].foto.splice(+h.getAttribute("data-j"), 1);
+    simpanKeg().then(function(){ tampil(aktif); renderKeg(); info("Foto dihapus."); });
+  });
+  document.getElementById("gkTambah").addEventListener("click", function(){ if(dev()){ pilihFoto.value = ""; pilihFoto.click(); } });
+  pilihFoto.addEventListener("change", function(){
+    if(!dev() || aktif < 0 || !pilihFoto.files.length) return;
+    var target = aktif;
+    Promise.all(Array.prototype.map.call(pilihFoto.files, function(f){ return kecilkan(f, 1200); })).then(function(hasil){
+      hasil.forEach(function(src){ data[target].foto.push({s: src, k: ""}); });
+      return simpanKeg().then(function(){ tampil(target); renderKeg(); info(hasil.length + " foto ditambahkan. Tulis keterangannya di bawah tiap foto."); });
+    }).catch(function(){ info("Salah satu berkas bukan gambar yang valid."); });
+  });
+
+  // Formulir kegiatan
+  function bukaForm(i){
+    sunting = i; galat.textContent = ""; f_foto.value = "";
+    var k = i >= 0 ? data[i] : {t:"", j:"", d:""};
+    document.getElementById("judulKeg").textContent = i >= 0 ? "Ubah kegiatan" : "Tambah kegiatan";
+    document.getElementById("kgFotoLabel").hidden = i >= 0; f_foto.hidden = i >= 0;
+    f_tgl.value = k.t || ""; f_judul.value = k.j || ""; f_desk.value = k.d || "";
+    dlg.showModal(); f_judul.focus();
+  }
+  tombolKeg.addEventListener("click", function(){ if(dev()) bukaForm(-1); });
+  document.getElementById("kgBatal").addEventListener("click", function(){ dlg.close(); });
+  grid.addEventListener("click", function(e){
+    var buka = e.target.closest(".buka"), u = e.target.closest(".ubah"), h = e.target.closest(".hapus");
+    if(buka){ tampil(+buka.getAttribute("data-i")); return; }
+    if(!dev()) return;
+    if(u) bukaForm(+u.getAttribute("data-i"));
+    if(h && confirm("Hapus kegiatan ini beserta semua fotonya?")){
+      data.splice(+h.getAttribute("data-i"), 1);
+      simpanKeg().then(function(){ renderKeg(); info("Kegiatan dihapus."); });
+    }
+  });
+  form.addEventListener("submit", function(e){
+    e.preventDefault();
+    if(!dev()) return;
+    var j = f_judul.value.trim();
+    if(!j){ galat.textContent = "Judul kegiatan wajib diisi."; return; }
+    if(sunting >= 0){
+      data[sunting].t = f_tgl.value.trim(); data[sunting].j = j; data[sunting].d = f_desk.value.trim();
+      simpanKeg().then(function(){ renderKeg(); dlg.close(); info("Kegiatan diperbarui."); });
+      return;
+    }
+    Promise.all(Array.prototype.map.call(f_foto.files, function(f){ return kecilkan(f, 1200); })).then(function(hasil){
+      data.push({t: f_tgl.value.trim(), j: j, d: f_desk.value.trim(), foto: hasil.map(function(src){ return {s: src, k: ""}; })});
+      return simpanKeg().then(function(){ renderKeg(); dlg.close(); tampil(data.length - 1); });
+    }).catch(function(){ galat.textContent = "Salah satu berkas bukan gambar yang valid."; });
+  });
+
+  // Muat data tersimpan (dan pindahkan data versi lama dari localStorage bila ada)
+  idbGet(KK).then(function(v){
+    data = Array.isArray(v) ? v : [];
+    if(!data.length){
+      var lama = baca(KK);
+      if(lama.length){
+        data = lama.map(function(k){ return {t: k.t || "", j: k.j || "", d: k.d || "", foto: k.f ? [{s: k.f, k: ""}] : []}; });
+        try { localStorage.removeItem(KK); } catch(e){}
+        return simpanKeg();
+      }
+    }
+  }).catch(function(){ data = []; }).then(renderKeg);
+
+  renderDok();
+})();
+</script>
+<script>
+(function(){
+  // Judul hero: kecilkan otomatis bila hurufnya terlalu lebar agar tidak terpotong
+  var spans = Array.prototype.slice.call(document.querySelectorAll(".hero h1 span, .kata-besar")), kotak = document.querySelector(".hero-isi");
+  function pas(){
+    spans.forEach(function(el){
+      var maks = el.classList.contains("kata-besar") ? el.clientWidth : kotak.clientWidth;
+      el.style.fontSize = "";
+      var w = el.scrollWidth;
+      if(w > maks) el.style.fontSize = (parseFloat(getComputedStyle(el).fontSize) * maks / w * 0.98) + "px";
+    });
+  }
+  pas(); window.addEventListener("resize", pas);
+  if(document.fonts && document.fonts.ready) document.fonts.ready.then(pas);
+})();
+</script>
+</body>
+</html>
+
